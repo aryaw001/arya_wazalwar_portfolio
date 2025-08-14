@@ -69,7 +69,10 @@ app.use((req, res, next) => {
 
   // Start server
   const port = parseInt(process.env.PORT || "5000", 10);
-  server.listen(port, "127.0.0.1", () => {
-    log(`✅ Serving on http://127.0.0.1:${port}`);
+  
+  // v-- THE CHANGE IS HERE --v
+  server.listen(port, "0.0.0.0", () => {
+    log(`✅ Server listening on port ${port}`);
   });
+  // ^-- THE CHANGE IS HERE --^
 })();
