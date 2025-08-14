@@ -37,10 +37,15 @@ const ContactSection = () => {
       if (data.file) {
         formPayload.append("file", data.file);
       }
-      const response = await fetch("/api/contact", {
+      
+      // v-- THE CHANGE IS HERE --v
+      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+      const response = await fetch(`${apiUrl}/api/contact`, {
         method: "POST",
         body: formPayload,
       });
+      // ^-- THE CHANGE IS HERE --^
+
       return response.json();
     },
     onSuccess: () => {
@@ -171,8 +176,8 @@ const ContactSection = () => {
                     value={formData.name}
                     onChange={handleInputChange}
                     placeholder="Your Name"
-                  className="w-full text-gray-900"
-                />
+                    className="w-full text-gray-900"
+                  />
                 </div>
                 <div>
                   <Label htmlFor="email" className="block text-sm font-semibold text-slate-700 mb-2">
@@ -204,40 +209,40 @@ const ContactSection = () => {
                     className="w-full text-gray-900"
                   />
                 </div>
-              <div>
-                <Label htmlFor="message" className="block text-sm font-semibold text-slate-700 mb-2">
-                  Message
-                </Label>
-                <Textarea
-                  id="message"
-                  name="message"
-                  value={formData.message}
-                  onChange={handleInputChange}
-                  rows={5}
-                  placeholder="Your message..."
-                  required
-                  className="w-full resize-none text-gray-900"
-                />
-              </div>
-              <div>
-                <Label htmlFor="file" className="block text-sm font-semibold text-slate-700 mb-2">
-                  Attach a file
-                </Label>
-                <Input
-                  type="file"
-                  id="file"
-                  name="file"
-                  onChange={handleFileChange}
-                  className="w-full text-gray-900"
-                />
-              </div>
-              <Button
-                type="submit"
-                disabled={contactMutation.isPending}
-                className="w-full bg-primary text-white py-3 px-6 font-semibold hover:bg-blue-700"
-              >
-                {contactMutation.isPending ? "Sending..." : "Send Message"}
-              </Button>
+                <div>
+                  <Label htmlFor="message" className="block text-sm font-semibold text-slate-700 mb-2">
+                    Message
+                  </Label>
+                  <Textarea
+                    id="message"
+                    name="message"
+                    value={formData.message}
+                    onChange={handleInputChange}
+                    rows={5}
+                    placeholder="Your message..."
+                    required
+                    className="w-full resize-none text-gray-900"
+                  />
+                </div>
+                <div>
+                  <Label htmlFor="file" className="block text-sm font-semibold text-slate-700 mb-2">
+                    Attach a file
+                  </Label>
+                  <Input
+                    type="file"
+                    id="file"
+                    name="file"
+                    onChange={handleFileChange}
+                    className="w-full text-gray-900"
+                  />
+                </div>
+                <Button
+                  type="submit"
+                  disabled={contactMutation.isPending}
+                  className="w-full bg-primary text-white py-3 px-6 font-semibold hover:bg-blue-700"
+                >
+                  {contactMutation.isPending ? "Sending..." : "Send Message"}
+                </Button>
               </div>
             </form>
           </motion.div>
