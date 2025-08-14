@@ -13,9 +13,7 @@ if (!process.env.DATABASE_URL) {
   );
 }
 
-export const pool = mysql.createPool({
-  uri: process.env.DATABASE_URL,
-  connectionLimit: 10,
-});
+// Pass the DATABASE_URL string directly to createPool
+export const pool = mysql.createPool(process.env.DATABASE_URL);
 
 export const db = drizzle(pool, { schema, mode: 'default' });
